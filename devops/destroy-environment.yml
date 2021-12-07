@@ -1,0 +1,25 @@
+schedules:
+  - cron: "59 21 * * *"
+    displayName: Destruição noturna do Ambiente
+    branches:
+      include:
+        - development
+      exclude:
+        - main
+    always: true
+
+trigger: none
+pr: none
+
+pool:
+  vmImage: ubuntu-latest
+
+stages:
+  - stage: Stage1
+    displayName: Preparing for destruction
+    jobs:
+      - job: job1
+        displayName: Gathering Destroy Template
+    variables:
+      - group: kv-tf
+  - template: stages/stage-destroy.yml

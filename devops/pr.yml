@@ -1,0 +1,25 @@
+pr: 
+  branches:
+    include:
+      - development
+      - main
+  paths:
+    include:
+      - stacks/*
+      - modules/*
+      - environments/*
+
+trigger: none
+
+pool:
+  vmImage: ubuntu-latest
+
+stages:
+
+  - stage: CI
+    displayName: Continuous Integration
+    jobs: 
+    - job: CIvalidation
+    variables:
+    - group: kv-tf
+  - template: stages/ci.yml

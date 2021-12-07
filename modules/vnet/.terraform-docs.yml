@@ -1,0 +1,60 @@
+header-from: main.tf
+
+formatter: "markdown table"
+
+sort:
+  enabled: true
+  by: required
+
+content: |
+  {{ .Header }}
+
+  {{ .Providers }}
+
+  {{ .Resources }}
+
+  {{ .Inputs }}
+
+  {{ .Outputs }}
+
+  ## Examples 
+  ### Basic Virtual Network Example 
+
+  ``` hcl
+  {{ include "examples/basic-vnet/main.tf" }}
+  ```
+
+  ### Two Virtual Networks + VNet Peering Example
+  ``` hcl
+  {{ include "examples/two-vnets-and-peering/main.tf" }}
+  ```
+
+  ### Virtual Network with Service endpoints Example
+  ``` hcl
+  {{ include "examples/vnet-service-endpoint/main.tf" }}
+  ```
+ 
+  ### Virtual Network with Subnet Delegation Example
+  ``` hcl
+  {{ include "examples/subnet-delegation/main.tf" }}
+  ```
+
+  ## Deseja contribuir?
+
+  Para contruibuir com este repositório você deve instalar o [**Terraform-docs**](https://terraform-docs.io/user-guide/installation/).
+  Etapas: 
+    * Clone este repositório;
+    * Crie uma branch;
+    * Realize todas as modificações que deseja;
+    * Faça o commit e crie uma tag (v1.1.0, v1.2.3, etc);
+    * Documente o código usando `make all`;
+    * Faça o push da sua branch seguido de um Pull Request.
+  
+  <sub>Para dúvidas mande um contato: [carlos.oliveira@softwareone.com](mailto:carlos.oliveira@softwareone.com)</sub>
+
+settings:
+  color: true
+  default: true
+  description: true
+  sensitive: true
+  type: true
