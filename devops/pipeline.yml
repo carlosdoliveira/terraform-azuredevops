@@ -18,7 +18,7 @@ pool:
 stages:
 
   - stage: CD
-    condition: and(succeeded(), in(variables['Build.Reason'], 'IndividualCI')) 
+    condition: and(succeeded(), in(variables['Build.Reason'], 'IndividualCI')) # Essa lógica indica que o Pipe "IndividualCI precisa ter sido bem sucedido para poder começar o CD"
     displayName: Continuous Deployment
     jobs: 
     - job: "CD"
