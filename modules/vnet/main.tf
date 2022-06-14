@@ -66,12 +66,6 @@ resource "azurerm_subnet_route_table_association" "vnet" {
   subnet_id      = local.azurerm_subnets[each.key]
 }
 
-resource "azurerm_subnet_nat_gateway_association" "nat" {
-  for_each       = var.nat_gateway_ids
-  subnet_id      = local.azurerm_subnets[each.key]
-  nat_gateway_id = each.value
-}
-
 resource "azurerm_virtual_network_peering" "vnet" {
   for_each = var.vnet_peering_settings == null ? {} : var.vnet_peering_settings
 

@@ -1,3 +1,5 @@
+[[_TOC_]]
+
 # Azure Vnet Module
 This module presents an easy way to provision all you need for you virtual network:
  - Virtual Network
@@ -10,18 +12,17 @@ This module presents an easy way to provision all you need for you virtual netwo
  - Route Table Attachment
  - Virtual Network Peering
 
-## Providers
+## Requirements
 
 | Name | Version |
 |------|---------|
-| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | ~> 2.77 |
+| <a name="requirement_azurerm"></a> [azurerm](#requirement\_azurerm) | >= 2.99.0 |
 
 ## Resources
 
 | Name | Type |
 |------|------|
 | [azurerm_subnet.subnet](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/subnet) | resource |
-| [azurerm_subnet_nat_gateway_association.nat](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/subnet_nat_gateway_association) | resource |
 | [azurerm_subnet_network_security_group_association.vnet](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/subnet_network_security_group_association) | resource |
 | [azurerm_subnet_route_table_association.vnet](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/subnet_route_table_association) | resource |
 | [azurerm_virtual_network.vnet](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_network) | resource |
@@ -37,7 +38,6 @@ This module presents an easy way to provision all you need for you virtual netwo
 | <a name="input_vnet_name"></a> [vnet\_name](#input\_vnet\_name) | Name of the vnet to create | `string` | n/a | yes |
 | <a name="input_dns_servers"></a> [dns\_servers](#input\_dns\_servers) | The DNS servers to be used with vNet. Omitting or leaving this field blank will cause the resource to use Azure's Default DNS | `list(string)` | `[]` | no |
 | <a name="input_location"></a> [location](#input\_location) | Valid location where subnet will be created. If this value is set as 'null' it will automatically use Resource Group's location. | `string` | `null` | no |
-| <a name="input_nat_gateway_ids"></a> [nat\_gateway\_ids](#input\_nat\_gateway\_ids) | A map of subnet name to NAT Gateway ids | `map(string)` | `{}` | no |
 | <a name="input_nsg_ids"></a> [nsg\_ids](#input\_nsg\_ids) | A map of subnet name to Network Security Group IDs | `map(string)` | `{}` | no |
 | <a name="input_route_tables_ids"></a> [route\_tables\_ids](#input\_route\_tables\_ids) | A map of subnet name to Route table ids | `map(string)` | `{}` | no |
 | <a name="input_subnet_enforce_private_link_endpoint_network_policies"></a> [subnet\_enforce\_private\_link\_endpoint\_network\_policies](#input\_subnet\_enforce\_private\_link\_endpoint\_network\_policies) | A map of subnet name to enable/disable private link endpoint network policies on the subnet. | `map(bool)` | `{}` | no |
@@ -55,41 +55,54 @@ This module presents an easy way to provision all you need for you virtual netwo
 | <a name="output_vnet_id"></a> [vnet\_id](#output\_vnet\_id) | The id of the newly created vNet |
 | <a name="output_vnet_location"></a> [vnet\_location](#output\_vnet\_location) | The location of the newly created vNet |
 | <a name="output_vnet_name"></a> [vnet\_name](#output\_vnet\_name) | The Name of the newly created vNet |
-| <a name="output_vnet_subnet_ids"></a> [vnet\_subnet\_ids](#output\_vnet\_subnet\_ids) | n/a |
-| <a name="output_vnet_subnet_names"></a> [vnet\_subnet\_names](#output\_vnet\_subnet\_names) | n/a |
+| <a name="output_vnet_subnet_ids"></a> [vnet\_subnet\_ids](#output\_vnet\_subnet\_ids) | The Resource Id of each subnet. |
+| <a name="output_vnet_subnet_names"></a> [vnet\_subnet\_names](#output\_vnet\_subnet\_names) | The name of each created subnet. |
 
-## Examples
-### Basic Virtual Network Example
+## Examples 
+### Basic Virtual Network Example 
 
-``` hcl
-resource "azurerm_resource_group" "rg" {
-  name     = var.resource_group_name
-  location = var.location
-  tags     = var.tags
+``` go
+resource "random_pet" "pet" {
+  length    = 2
+  separator = "-"
 }
 
-module "vnet-west" {
-  source              = "../"
+resource "azurerm_resource_group" "rg" {
+  name     = join("-", ["rg", random_pet.pet.id])
+  location = var.location
+  tags     = var.tags
+  depends_on = [
+    random_pet.pet
+  ]
+}
+
+module "vnet-east" {
+  source              = "../../"
   resource_group_name = azurerm_resource_group.rg.name
-  location            = "westeurope"
-  vnet_name           = "vnet-west-europe"
-  address_space       = ["10.0.0.0/16", "192.168.0.0/24"]
+  location            = azurerm_resource_group.rg.location
+  vnet_name           = join("-", ["vnet", random_pet.pet.id])
+  address_space       = ["10.1.0.0/16", "192.169.0.0/24"]
   subnets = {
     subnet1 = {
-      address_prefix = "10.0.0.0/24"
+      address_prefix = "10.1.0.0/24"
     }
     subnet2 = {
-      address_prefix = "10.0.1.0/24"
+      address_prefix = "10.1.1.0/24"
     }
     subnet3 = {
-      address_prefix = "192.168.0.0/27"
+      address_prefix = "192.169.0.0/27"
     }
   }
+
+  tags = var.tags
+  depends_on = [
+    azurerm_resource_group.rg
+  ]
 }
 ```
 
 ### Two Virtual Networks + VNet Peering Example
-``` hcl
+``` go
 resource "azurerm_resource_group" "rg" {
   name     = var.resource_group_name
   location = var.location
@@ -119,7 +132,7 @@ module "vnet-west" {
       remote_vnet_id = module.vnet-east.vnet_id
     }
     vnet2 = {
-      remote_vnet_id = "/subscriptions/ff14dd7f-37f0-4ef30-b9d3-80ed9003cce5/resourceGroups/rg-minecraft/providers/Microsoft.Network/virtualNetworks/minecraft-vnet"
+      remote_vnet_id = "/subscriptions/00000000-37f0-4ef30-b9d3-000000000000/resourceGroups/rg-test/providers/Microsoft.Network/virtualNetworks/test-vnet"
     }
   }
 
@@ -161,7 +174,7 @@ module "vnet-east" {
 ```
 
 ### Virtual Network with Service endpoints Example
-``` hcl
+``` go
 resource "random_pet" "pet" {
   length    = 2
   separator = "-"
@@ -205,7 +218,7 @@ module "vnet-east" {
 ```
 
 ### Virtual Network with Subnet Delegation Example
-``` hcl
+``` go
 resource "azurerm_resource_group" "rg" {
   name     = var.resource_group_name
   location = var.location
@@ -251,13 +264,13 @@ module "vnet-west" {
 ## Deseja contribuir?
 
 Para contruibuir com este repositório você deve instalar o [**Terraform-docs**](https://terraform-docs.io/user-guide/installation/).
-Etapas:
-* Clone este repositório;
-* Crie uma branch;
-* Realize todas as modificações que deseja;
-* Faça o commit e crie uma tag (v1.1.0, v1.2.3, etc);
-* Documente o código usando `make all`;
-* Faça o push da sua branch seguido de um Pull Request.
+Etapas: 
+  * Clone este repositório;
+  * Crie uma branch;
+  * Realize todas as modificações que deseja;
+  * Faça o commit e crie uma tag (v1.1.0, v1.2.3, etc);
+  * Documente o código usando `make all`;
+  * Faça o push da sua branch seguido de um Pull Request.
 
 <sub>Para dúvidas mande um contato: [carlos.oliveira@softwareone.com](mailto:carlos.oliveira@softwareone.com)</sub>
 

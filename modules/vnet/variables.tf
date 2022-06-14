@@ -55,12 +55,6 @@ variable "route_tables_ids" {
   default     = {}
 }
 
-variable "nat_gateway_ids" {
-  description = "A map of subnet name to NAT Gateway ids"
-  type        = map(string)
-  default     = {}
-}
-
 variable "tags" {
   description = "The tags to associate with your network and subnets."
   type        = map(any)

@@ -21,13 +21,13 @@ module "vnet-west" {
       address_prefix = "192.168.0.0/27"
     }
   }
-
+  
   vnet_peering_settings = {
     vnet1-to-vnet2 = {
       remote_vnet_id = module.vnet-east.vnet_id
     }
     vnet2 = {
-      remote_vnet_id = "/subscriptions/ff14dd7f-37f0-4ef30-b9d3-80ed9003cce5/resourceGroups/rg-minecraft/providers/Microsoft.Network/virtualNetworks/minecraft-vnet"
+      remote_vnet_id = "/subscriptions/00000000-37f0-4ef30-b9d3-000000000000/resourceGroups/rg-test/providers/Microsoft.Network/virtualNetworks/test-vnet"
     }
   }
 

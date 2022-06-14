@@ -9,7 +9,7 @@ sort:
 content: |
   {{ .Header }}
 
-  {{ .Providers }}
+  {{ .Requirements }}
 
   {{ .Resources }}
 
@@ -20,22 +20,22 @@ content: |
   ## Examples 
   ### Basic Virtual Network Example 
 
-  ``` hcl
+  ``` go
   {{ include "examples/basic-vnet/main.tf" }}
   ```
 
   ### Two Virtual Networks + VNet Peering Example
-  ``` hcl
+  ``` go
   {{ include "examples/two-vnets-and-peering/main.tf" }}
   ```
 
   ### Virtual Network with Service endpoints Example
-  ``` hcl
+  ``` go
   {{ include "examples/vnet-service-endpoint/main.tf" }}
   ```
- 
+
   ### Virtual Network with Subnet Delegation Example
-  ``` hcl
+  ``` go
   {{ include "examples/subnet-delegation/main.tf" }}
   ```
 
@@ -49,7 +49,7 @@ content: |
     * Faça o commit e crie uma tag (v1.1.0, v1.2.3, etc);
     * Documente o código usando `make all`;
     * Faça o push da sua branch seguido de um Pull Request.
-  
+
   <sub>Para dúvidas mande um contato: [carlos.oliveira@softwareone.com](mailto:carlos.oliveira@softwareone.com)</sub>
 
 settings:
