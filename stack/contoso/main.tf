@@ -16,16 +16,3 @@ module "dns" {
     module.rg
   ]
 }
-module "vnet" {
-  source = "../../modules/vnet"
-
-  resource_group_name = module.rg.name
-  location            = module.rg.location
-  vnet_name           = var.vnet_name
-  address_space       = var.vnet_address_space
-  subnets             = var.subnets_vnet
-
-  depends_on = [
-    module.rg
-  ]
-}
