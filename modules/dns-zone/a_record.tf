@@ -9,8 +9,8 @@
 resource "azurerm_dns_a_record" "a" {
   for_each = {
     for all_records, record in var.dns_records : all_records => record
-      if lookup(record, "a", {}) == {}
-    }
+    if lookup(record, "a", {}) == {}
+  }
   resource_group_name = lower(var.resource_group_name)
   zone_name           = var.zone_name
   name                = each.key

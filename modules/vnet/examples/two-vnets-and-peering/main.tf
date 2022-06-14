@@ -21,7 +21,7 @@ module "vnet-west" {
       address_prefix = "192.168.0.0/27"
     }
   }
-  
+
   vnet_peering_settings = {
     vnet1-to-vnet2 = {
       remote_vnet_id = module.vnet-east.vnet_id
