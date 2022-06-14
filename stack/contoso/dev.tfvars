@@ -30,27 +30,3 @@ dns_settings = {
     ]
   }
 }
-#************************************
-# VNET Vars
-#************************************
-vnet_name          = "vnet-dev"
-vnet_address_space = ["10.2.0.0/16"]
-subnets_vnet = {
-  snet-dev = {
-    address_prefix = "10.2.0.0/19"
-  }
-  snet-psql-dev = {
-    address_prefix = "10.2.34.0/23"
-    delegation = {
-      name = "psql"
-      service_delegation = {
-        name = "Microsoft.DBforPostgreSQL/flexibleServers"
-        actions = [
-          "Microsoft.Network/virtualNetworks/subnets/join/action",
-        ]
-      }
-    }
-  }
-}
-
-
