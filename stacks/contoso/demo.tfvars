@@ -30,9 +30,9 @@ dns_settings = {
         record = "file.core.windows.net"
       },
       {
-        name = "demo"
-        type = "TXT"
-        ttl = 300
+        name   = "demo"
+        type   = "TXT"
+        ttl    = 300
         record = ["Code FC Show Demais"]
       }
     ]
