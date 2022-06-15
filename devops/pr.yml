@@ -6,7 +6,7 @@ pr:
       - main
   paths:
     include:
-      - terraform/stacks/contoso/env/demo.tfvars
+      - terraform/stacks/contoso/demo.tfvars
 
 trigger: none
 
