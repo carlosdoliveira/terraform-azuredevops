@@ -8,3 +8,4 @@ variables:
     value: az-connection
   - name: TF_WORKSPACE
     value: demo
+  - group: yt-var-group
