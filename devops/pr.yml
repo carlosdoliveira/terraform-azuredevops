@@ -16,8 +16,9 @@ pool:
 stages:
   - stage: PR
     displayName: Testing Environment
+    variables:
+    - template: variables/variables.demo.yml
     jobs:
       - job: "prJob"
   - template: stages/stage.pr.yml
-    variables:
-    - template: variables/variables.demo.yml
+    
