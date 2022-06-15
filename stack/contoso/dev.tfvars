@@ -1,11 +1,13 @@
 #------------------------------------
 # RG Vars
 #------------------------------------
-rg_name     = "rg-mvp-devops-dev"
+rg_name     = "rg-yt-001"
 rg_location = "eastus2"
+
 #------------------------------------
 # DNS Vars
 #------------------------------------
+
 dns_settings = {
   "cloudsquad.com" = {
     dns_records = [
@@ -25,8 +27,13 @@ dns_settings = {
         name   = "files"
         type   = "CNAME"
         ttl    = 3600
-        record = "files.blob.azure.com"
+        record = "file.core.windows.net"
       }
     ]
   }
+}
+
+tags = {
+  projeto = "youtube"
+  env     = "dev"
 }
