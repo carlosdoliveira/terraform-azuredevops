@@ -10,6 +10,5 @@ stages:
           - template: ../steps/step.init.yml
           - template: ../steps/step.validate.yml
           - template: ../steps/step.plan.yml
-          - template: ../steps/step.infracost.yml
 
   
