@@ -6,7 +6,7 @@ stages:
       - template: ../variables/variables.demo.yml
     jobs:
       - job: initializeJob
-    steps:
-      step:
-        - template: ../steps/step.init.yml
-        - template: ../steps/step.apply.yml
+        displayName: Applying Building plan
+        steps:
+          - template: ../steps/step.init.yml
+          - template: ../steps/step.apply.yml
