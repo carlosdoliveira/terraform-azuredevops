@@ -5,7 +5,7 @@ locals {
 resource "azurerm_dns_cname_record" "cname" {
   for_each = {
     for records, record in var.dns_records : records => record
-    if lookup(record, "cname", {}) != {}
+    if record.type == "CNAME"
   }
 
 

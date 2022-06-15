@@ -1,7 +1,7 @@
 resource "azurerm_dns_mx_record" "mx" {
   for_each = {
     for records, record in var.dns_records : records => record
-    if lookup(record, "mx", {}) != {}
+    if record.type == "MX"
   }
 
   resource_group_name = lower(lower(var.resource_group_name))
