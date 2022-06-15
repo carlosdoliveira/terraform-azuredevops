@@ -5,6 +5,6 @@ steps:
       command: 'apply'
       workingDirectory: $(terraformWorkDirectory)
       environmentServiceName: az-connection
-      commandOptions: '-out=main.tfplan -var-file=$(TF_WORKSPACE).tfvars'
+      commandOptions: '-var-file=$(TF_WORKSPACE).tfvars'
       allowTelemetryCollection: true
     displayName: 'Terraform Apply'
