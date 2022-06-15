@@ -9,3 +9,9 @@ steps:
       commandOptions: '-out=main.tfplan -var-file=$(TF_WORKSPACE).tfvars'
       allowTelemetryCollection: true
       publishPlanResults: "Terraform Plan"
+  - bash: |
+          ls
+          cd $(terraformWorkDirectory) 
+          terraform show -json main.tfplan > main.json
+          ls
+    displayName: Output Plan JSON file
