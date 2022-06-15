@@ -5,7 +5,7 @@ steps:
     inputs:
       command: "plan"
       workingDirectory: $(terraformWorkDirectory)
-      environmentServiceName: $(service_connection_name)
+      environmentServiceName: az-connection
       commandOptions: '-out=main.tfplan -var-file=./env/$(TF_WORKSPACE).tfvars'
       allowTelemetryCollection: true
       publishPlanResults: "Terraform Plan"

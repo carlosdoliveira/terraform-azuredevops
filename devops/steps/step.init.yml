@@ -7,7 +7,7 @@ steps:
       workingDirectory: $(terraformWorkDirectory)
       commandOptions: "-reconfigure"
       backendType: "azurerm"
-      backendServiceArm: $(service_connection_name)
+      backendServiceArm: az-connection
       backendAzureRmResourceGroupName: "$(TF-BACKEND-RESOURCE-GROUP)"
       backendAzureRmStorageAccountName: "$(TF-BACKEND-STORAGE-ACCOUNT)"
       backendAzureRmContainerName: "$(TF-BACKEND-CONTAINER)"
