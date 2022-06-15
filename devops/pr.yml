@@ -14,11 +14,5 @@ pool:
   vmImage: ubuntu-latest
 
 stages:
-  - stage: PR
-    displayName: Testing Environment
-    variables:
-    - template: variables/variables.demo.yml
-    jobs:
-      - job: "prJob"
   - template: stages/stage.pr.yml
-    
+  - template: stages/stage.validation.yml
