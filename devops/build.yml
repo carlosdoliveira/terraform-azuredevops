@@ -11,11 +11,5 @@ pool:
   vmImage: ubuntu-latest
 
 stages:
-  - stage: Build
-    displayName: Infra build
-    variables:
-    - template: variables/variables.demo.yml
-    jobs:
-      - job: "buildJob"
   - template: stages/stage.build.yml
     

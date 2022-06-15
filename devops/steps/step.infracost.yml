@@ -18,5 +18,5 @@ steps:
         ARM_TENANT_ID: $(ARM-TENANT-ID)
         path: 'stacks/contoso'
         terraform_workspace: $(TF_WORKSPACE)
-        terraform_plan_flags: '-out=main.tfplan -var-file=./env/$(TF_WORKSPACE).tfvars'
+        terraform_plan_flags: '-out=main.json -var-file=$(TF_WORKSPACE).tfvars'
         show_skipped: true

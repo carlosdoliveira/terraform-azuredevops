@@ -1,0 +1,18 @@
+stages:
+  - stage: Validation
+    dependsOn: "PR"
+    condition: Succeeded()
+    displayName: "Aprovação do Terraform Plan"
+    jobs:
+      - job: waitForValidation
+        displayName: "Você aprova a execução deste plano?"
+        pool: "server"
+        timeoutInMinutes: "4320" # job times out in 3 days
+        steps:
+          - task: ManualValidation@0
+            timeoutInMinutes: 1440 # task times out in 1 day
+            inputs:
+              notifyUsers: |
+                cdaniel.oliveira@outlook.com
+              instructions: "There are resources being destroyed as part of this deployment, please review the output of Terraform plan before approving."
+              onTimeout: "reject"

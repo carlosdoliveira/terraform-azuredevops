@@ -1,15 +1,19 @@
 ---
 steps:
-  - task: TerraformCLI@0
-    displayName: Terraform init
-    inputs:
-      command: 'init'w
-      workingDirectory: $(terraformWorkDirectory)
-      commandOptions: "-reconfigure"
-      backendType: "azurerm"
-      backendServiceArm: $(service_connection_name)
-      backendAzureRmResourceGroupName: "$(TF-BACKEND-RESOURCE-GROUP)"
-      backendAzureRmStorageAccountName: "$(TF-BACKEND-STORAGE-ACCOUNT)"
-      backendAzureRmContainerName: "$(TF-BACKEND-CONTAINER)"
-      backendAzureRmKey: "$(TF-BACKEND-KEY)"
-      allowTelemetryCollection: true
+- task: TerraformInstaller@0
+  inputs:
+    terraformVersion: 'latest'
+
+- task: TerraformCLI@0
+  displayName: Terraform init
+  inputs:
+    command: 'init'
+    workingDirectory: $(terraformWorkDirectory)
+    commandOptions: "-reconfigure"
+    backendType: "azurerm"
+    backendServiceArm: az-connection
+    backendAzureRmResourceGroupName: $(TF-BACKEND-RESOURCE-GROUP)
+    backendAzureRmStorageAccountName: $(TF-BACKEND-STORAGE-ACCOUNT)
+    backendAzureRmContainerName: $(TF-BACKEND-CONTAINER)
+    backendAzureRmKey: $(TF-BACKEND-KEY)
+    allowTelemetryCollection: true
