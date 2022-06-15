@@ -7,10 +7,10 @@ stages:
       - job: prValidation
         displayName: Code Validation and Formatting
         steps:
-          - template: steps/step.init.yml
-          - template: steps/step.validate.yml
-          - template: steps/step.plan.yml
-          - template: steps/step.infracost.yml
+          - template: ../steps/step.init.yml
+          - template: ../steps/step.validate.yml
+          - template: ../steps/step.plan.yml
+          - template: ../steps/step.infracost.yml
 
   - stage: Validation
     dependsOn: "PR"
