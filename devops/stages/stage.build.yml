@@ -1,0 +1,12 @@
+---
+stages:
+  - stage: build
+    displayName: Building Infra
+    variables:
+      - template: ../variables/variables.demo.yml
+    jobs:
+      - job: initializeJob
+    steps:
+      step:
+        - template: ../steps/step.init.yml
+        - template: ../steps/step.apply.yml

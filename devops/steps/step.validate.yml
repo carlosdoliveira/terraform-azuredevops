@@ -1,0 +1,16 @@
+---
+steps:
+   - task: TerraformCLI@0
+     displayName: Terraform Validate
+     inputs:
+       command: 'validate'
+       workingDirectory: $(terraformWorkDirectory)
+       allowTelemetryCollection: true
+
+   - task: TerraformCLI@0
+     displayName: Terraform FMT
+     inputs:
+       command: 'fmt'
+       workingDirectory: $(terraformWorkDirectory)
+       commandOptions: '-check -diff'
+       allowTelemetryCollection: true

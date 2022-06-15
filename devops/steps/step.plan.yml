@@ -1,0 +1,11 @@
+---
+steps:
+  - task: TerraformCLI@0
+    displayName: Terraform Plan
+    inputs:
+      command: "plan"
+      workingDirectory: $(terraformWorkDirectory)
+      environmentServiceName: $(service_connection_name)
+      commandOptions: '-out=main.tfplan -var-file=./env/$(TF_WORKSPACE).tfvars'
+      allowTelemetryCollection: true
+      publishPlanResults: "Terraform Plan"

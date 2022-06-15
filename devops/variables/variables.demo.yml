@@ -1,0 +1,10 @@
+# These variables are used to perform the manual steps
+# if vnet name or resource group name changes on Terraform. These values must be changed here as well.
+---
+variables:
+  - name: terraformWorkDirectory
+    value: $(System.DefaultWorkingDirectory)/stacks/contoso
+  - name: service_connection_name
+    value: az-connection
+  - name: TF_WORKSPACE
+    value: demo

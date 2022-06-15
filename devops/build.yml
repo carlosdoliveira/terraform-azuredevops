@@ -1,6 +1,5 @@
 ---
-pr:
-  autoCancel: false
+trigger:
   branches:
     include:
       - main
@@ -8,16 +7,14 @@ pr:
     include:
       - terraform/stacks/contoso/env/demo.tfvars
 
-trigger: none
-
 pool:
   vmImage: ubuntu-latest
 
 stages:
-  - stage: PR
-    displayName: Testing Environment
+  - stage: Build
+    displayName: Infra build
     jobs:
-      - job: "prJob"
-  - template: stages/stage.pr.yml
+      - job: "buildJob"
+  - template: stages/stage.build.yml
     variables:
     - template: variables/variables.demo.yml
